@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cert-watch"
+version = "1.0.0"
+description = "TLS/SSL certificate expiry scanner and renewal tracker"
+requires-python = ">=3.9"
+dependencies = [
+    "click>=8.0.0",
+    "rich>=13.0.0",
+    "pyyaml>=6.0",
+]
+
+[project.scripts]
+cert-watch = "cert_watch.cli:cli"
+
+[tool.setuptools.packages.find]
+include = ["cert_watch*"]
