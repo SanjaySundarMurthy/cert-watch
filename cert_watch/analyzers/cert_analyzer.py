@@ -1,7 +1,11 @@
 """Certificate analyzer — applies CERT-001 to CERT-010 rules."""
 from ..models import (
-    Certificate, CertReport, Finding, Severity, CertProvider,
-    KeyAlgorithm, CERT_RULES,
+    CERT_RULES,
+    Certificate,
+    CertProvider,
+    CertReport,
+    Finding,
+    KeyAlgorithm,
 )
 
 
@@ -40,8 +44,8 @@ def _make_finding(rule_id: str, cert: Certificate, **overrides) -> Finding:
 def _check_expired(cert: Certificate, report: CertReport):
     """CERT-001: Certificate expired."""
     if cert.is_expired:
-        report.findings.append(_make_finding("CERT-001", cert,
-            description=f"Certificate for {cert.domain} expired {abs(cert.days_until_expiry)} days ago"))
+        desc = f"Certificate for {cert.domain} expired {abs(cert.days_until_expiry)} days ago"
+        report.findings.append(_make_finding("CERT-001", cert, description=desc))
 
 
 def _check_expiring_7_days(cert: Certificate, report: CertReport):

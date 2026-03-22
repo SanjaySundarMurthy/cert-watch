@@ -18,15 +18,20 @@ SEVERITY_COLORS = {
 
 def print_report(report: CertReport, console: Optional[Console] = None):
     console = console or Console()
-    grade_color = {"A": "green", "B": "blue", "C": "yellow", "D": "red", "F": "red bold"}.get(report.grade, "white")
+    grade_color = {
+        "A": "green", "B": "blue", "C": "yellow",
+        "D": "red", "F": "red bold",
+    }.get(report.grade, "white")
     console.print(Panel(
         f"[bold]Certificates:[/] {report.total_certs}\n"
         f"[bold]Valid:[/] [green]{report.valid_count}[/] | "
         f"[bold]Expiring Soon:[/] [yellow]{report.expiring_soon_count}[/] | "
         f"[bold]Expired:[/] [red]{report.expired_count}[/]\n"
-        f"[bold]Health Score:[/] [{grade_color}]{report.health_score:.1f}/100 (Grade {report.grade})[/]\n"
+        f"[bold]Health Score:[/] [{grade_color}]"
+        f"{report.health_score:.1f}/100 (Grade {report.grade})[/]\n"
         f"[bold]Findings:[/] {len(report.findings)} "
-        f"(🔴 {report.critical_count} 🟠 {report.high_count} 🟡 {report.medium_count} 🔵 {report.low_count} ⚪ {report.info_count})",
+        f"(🔴 {report.critical_count} 🟠 {report.high_count} "
+        f"🟡 {report.medium_count} 🔵 {report.low_count} ⚪ {report.info_count})",
         title="🔒 Certificate Watch Report",
         border_style=grade_color,
     ))

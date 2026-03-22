@@ -1,5 +1,6 @@
 """Tests for CLI commands."""
 from click.testing import CliRunner
+
 from cert_watch.cli import cli
 
 

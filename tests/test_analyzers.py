@@ -1,7 +1,6 @@
 """Tests for certificate analyzer and parser."""
-from cert_watch.parser import parse_inventory
 from cert_watch.analyzers.cert_analyzer import analyze_certificates
-from cert_watch.models import Severity
+from cert_watch.parser import parse_inventory
 
 
 class TestParser:

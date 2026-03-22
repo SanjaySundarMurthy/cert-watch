@@ -1,8 +1,12 @@
 """Shared test fixtures for cert-watch."""
-import pytest
 from datetime import datetime, timedelta
+
+import pytest
+
 from cert_watch.models import (
-    Certificate, CertType, CertProvider, KeyAlgorithm, CertStatus, Severity,
+    Certificate,
+    CertProvider,
+    KeyAlgorithm,
 )
 
 

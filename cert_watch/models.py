@@ -2,7 +2,6 @@
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
 from enum import Enum
-from typing import Any
 
 
 class Severity(str, Enum):
@@ -114,14 +113,19 @@ class CertReport:
     def compute_summary(self):
         self.total_certs = len(self.certificates)
         self.expired_count = sum(1 for c in self.certificates if c.is_expired)
-        self.expiring_soon_count = sum(1 for c in self.certificates if 0 < c.days_until_expiry <= 30)
+        self.expiring_soon_count = sum(
+            1 for c in self.certificates if 0 < c.days_until_expiry <= 30
+        )
         self.valid_count = sum(1 for c in self.certificates if c.days_until_expiry > 30)
         self.critical_count = sum(1 for f in self.findings if f.severity == Severity.CRITICAL)
         self.high_count = sum(1 for f in self.findings if f.severity == Severity.HIGH)
         self.medium_count = sum(1 for f in self.findings if f.severity == Severity.MEDIUM)
         self.low_count = sum(1 for f in self.findings if f.severity == Severity.LOW)
         self.info_count = sum(1 for f in self.findings if f.severity == Severity.INFO)
-        penalty = (self.critical_count * 15) + (self.high_count * 10) + (self.medium_count * 5) + (self.low_count * 2)
+        penalty = (
+            (self.critical_count * 15) + (self.high_count * 10)
+            + (self.medium_count * 5) + (self.low_count * 2)
+        )
         self.health_score = max(0.0, 100.0 - penalty)
         if self.health_score >= 90:
             self.grade = "A"

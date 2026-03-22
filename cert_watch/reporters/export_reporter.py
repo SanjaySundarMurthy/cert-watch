@@ -1,5 +1,6 @@
 """Export reporter — JSON and HTML output for certificate reports."""
 import json
+
 from ..models import CertReport
 
 
@@ -41,7 +42,11 @@ def to_html(report: CertReport) -> str:
     d = to_dict(report)
     rows = ""
     for f in d["findings"]:
-        color = {"critical": "#dc3545", "high": "#fd7e14", "medium": "#ffc107", "low": "#17a2b8"}.get(f["severity"], "#6c757d")
+        sev_colors = {
+            "critical": "#dc3545", "high": "#fd7e14",
+            "medium": "#ffc107", "low": "#17a2b8",
+        }
+        color = sev_colors.get(f["severity"], "#6c757d")
         rows += f"""<tr>
 <td>{f['rule_id']}</td>
 <td style="color:{color};font-weight:bold">{f['severity'].upper()}</td>
@@ -49,11 +54,23 @@ def to_html(report: CertReport) -> str:
 <td>{f['description']}</td>
 <td>{f['recommendation']}</td>
 </tr>"""
+    score = d['health_score']
+    grade = d['grade']
+    total = d['total_certs']
+    expired = d['expired']
+    expiring = d['expiring_soon']
     return f"""<!DOCTYPE html>
 <html><head><title>Certificate Watch Report</title>
-<style>body{{font-family:sans-serif;margin:2em}}table{{border-collapse:collapse;width:100%}}
-th,td{{border:1px solid #ddd;padding:8px;text-align:left}}th{{background:#f4f4f4}}</style></head>
+<style>body{{font-family:sans-serif;margin:2em}}
+table{{border-collapse:collapse;width:100%}}
+th,td{{border:1px solid #ddd;padding:8px;text-align:left}}
+th{{background:#f4f4f4}}</style></head>
 <body><h1>Certificate Watch Report</h1>
-<p><b>Score:</b> {d['health_score']}/100 (Grade {d['grade']}) | <b>Certs:</b> {d['total_certs']} | <b>Expired:</b> {d['expired']} | <b>Expiring:</b> {d['expiring_soon']}</p>
-<table><tr><th>Rule</th><th>Severity</th><th>Domain</th><th>Issue</th><th>Recommendation</th></tr>
+<p><b>Score:</b> {score}/100 (Grade {grade})
+| <b>Certs:</b> {total}
+| <b>Expired:</b> {expired}
+| <b>Expiring:</b> {expiring}</p>
+<table><tr><th>Rule</th><th>Severity</th>
+<th>Domain</th><th>Issue</th>
+<th>Recommendation</th></tr>
 {rows}</table></body></html>"""

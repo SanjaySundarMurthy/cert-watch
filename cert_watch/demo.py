@@ -1,6 +1,7 @@
 """Demo data generator for cert-watch."""
-import yaml
 from datetime import datetime, timedelta
+
+import yaml
 
 
 def get_demo_inventory() -> str:

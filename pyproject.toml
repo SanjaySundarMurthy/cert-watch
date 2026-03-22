@@ -6,7 +6,27 @@ build-backend = "setuptools.build_meta"
 name = "cert-watch"
 version = "1.0.0"
 description = "TLS/SSL certificate expiry scanner and renewal tracker"
+readme = "README.md"
+license = {text = "MIT"}
 requires-python = ">=3.9"
+authors = [
+    {name = "Sanjay Sundar Murthy", email = "sanjaysundarmurthy@gmail.com"},
+]
+keywords = ["certificate", "tls", "ssl", "expiry", "security", "scanner", "cli"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "Intended Audience :: System Administrators",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Security",
+    "Topic :: System :: Systems Administration",
+]
 dependencies = [
     "click>=8.0.0",
     "rich>=13.0.0",
@@ -21,6 +41,11 @@ dev = [
 
 [project.scripts]
 cert-watch = "cert_watch.cli:cli"
+
+[project.urls]
+Homepage = "https://github.com/SanjaySundarMurthy/cert-watch"
+Repository = "https://github.com/SanjaySundarMurthy/cert-watch"
+Issues = "https://github.com/SanjaySundarMurthy/cert-watch/issues"
 
 [tool.setuptools.packages.find]
 include = ["cert_watch*"]

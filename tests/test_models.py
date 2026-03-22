@@ -1,8 +1,13 @@
 """Tests for data models."""
 from datetime import datetime, timedelta
+
 from cert_watch.models import (
-    Certificate, CertReport, Finding, Severity, CertStatus,
-    CertType, CertProvider, KeyAlgorithm, CERT_RULES,
+    CERT_RULES,
+    Certificate,
+    CertReport,
+    CertStatus,
+    Finding,
+    Severity,
 )
 
 
@@ -36,7 +41,10 @@ class TestCertificate:
 
 class TestCertReport:
     def test_compute_summary_no_findings(self):
-        report = CertReport(certificates=[Certificate(not_after=datetime.now() + timedelta(days=200))])
+        cert = Certificate(
+            not_after=datetime.now() + timedelta(days=200),
+        )
+        report = CertReport(certificates=[cert])
         report.compute_summary()
         assert report.total_certs == 1
         assert report.valid_count == 1

@@ -1,8 +1,14 @@
 """Parse certificate inventory YAML files."""
-import yaml
 from datetime import datetime
+
+import yaml
+
 from .models import (
-    Certificate, CertType, CertProvider, KeyAlgorithm, CertStatus,
+    Certificate,
+    CertProvider,
+    CertStatus,
+    CertType,
+    KeyAlgorithm,
 )
 
 PROVIDER_MAP = {
